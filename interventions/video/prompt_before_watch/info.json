@@ -1,0 +1,10 @@
+{
+  "description": "Prompt the user before watching a video",
+  "displayname": "Think Twice",
+  "content_scripts": [
+    {
+      "path": "frontend.js",
+      "run_at": "document_start"
+    }
+  ]
+}

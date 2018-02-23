@@ -1,0 +1,16 @@
+{
+  "description": "Before visiting a site you want to spend less time on, prompts if you want to go to a site you want to spend more time on.",
+  "displayname": "Why Not Bot",
+  "content_scripts": [
+    {
+      "path": "frontend.js",
+      "run_at": "document_start"
+    }
+  ],
+  "preview": "https://www.reddit.com",
+  "matches_all": true,
+  "categories": [
+    "interstitial",
+    "positive-site-trigger"
+  ]
+}

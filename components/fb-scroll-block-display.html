@@ -1,0 +1,82 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="habitlab-logo-v2.html">
+<link rel="import" href="call-to-action-button.html">
+
+<dom-module id="fb-scroll-block-display">
+  <template>
+    <style>
+       :host {
+
+        /*display: table-cell;*/
+      }
+
+      #container {
+        height: 50px;
+        background-color: #95CBEE;
+        position: fixed;
+        color: white;
+        width: 100%;
+        top: 0px;
+        right: 0px;
+        z-index: 99999;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #habitlab_logo {
+        position: absolute;
+        left: 10px;
+        top: -5px;
+        z-index: 999999;
+        margin-top: 10px;
+      }
+
+      .text_display {
+        font-size: 14px;
+        align-content: center;
+        text-align: center;
+      }
+
+      #call-to-action {
+        position: static;
+        height: 34px;
+      }
+
+      #continue_scrolling {
+        position: static;
+        background-color: #415D67;
+        color: white;
+        height: 34px;
+        box-shadow: 2px 2px 2px #888888;
+      }
+    </style>
+
+    <!--git
+    <img style="width: 38px; height: 38px" id="habitlab_logo" class="tooltip" src="{{get_url()}}" alt="icon" />
+    <paper-tooltip for="habitlab_logo" animation-delay="0">A tooltip</paper-tooltip>
+    -->
+    <div id="container">
+      <div class="text_display" style="color: #415D67; font-size: 20px">You have spent </div>
+      <div style="color: #415D67">
+        <div style="display: inline-block; margin-left: 20px; margin-right: 20px">
+          <div style="font-size: 28px; margin-bottom: -4px">{{minutes}}</div>
+          <div>min</div>
+        </div>
+        <div style="display: inline-block; margin-right: 20px">
+          <div style="font-size: 28px; margin-bottom: -4px">{{seconds}}</div>
+          <div>sec</div>
+        </div>
+      </div>
+      <div class="text_display" style="color: #415D67; font-size: 20px">on <span>{{site}}</span> </div>
+      <habitlab-logo-v2 id="habitlab_logo"></habitlab-logo-v2>
+      <div style="position: absolute; right: 10px; top: 7px">
+        <call-to-action-button id="call-to-action"></call-to-action-button>
+        <paper-button id="continue_scrolling" on-click="continue_scrolling">Continue Scrolling</paper-button>
+      </div>
+    </div>
+  </template>
+  <script src="fb-scroll-block-display.js"></script>
+</dom-module>

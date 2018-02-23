@@ -1,0 +1,18 @@
+{
+  "description": "Freezes scrolling after a certain amount of scrolls",
+  "displayname": "Scroll Freezer",
+  "content_scripts": [
+    {
+      "path": "frontend.js",
+      "run_at": "document_start"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "scrollevents",
+      "description": "The amount of scroll events until the notification appears again",
+      "default": 750,
+      "type": "int"
+    }
+  ]
+}

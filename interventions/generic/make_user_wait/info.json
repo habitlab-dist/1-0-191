@@ -1,0 +1,21 @@
+{
+  "description": "Makes you wait a few seconds before visiting",
+  "displayname": "GateKeeper",
+  "content_scripts": [
+    {
+      "path": "frontend.js",
+      "run_at": "document_start"
+    }
+  ],
+  "parameters": [
+    {
+      "name": "seconds",
+      "description": "Seconds that the user must wait before the page loads",
+      "default": 5,
+      "type": "int"
+    }
+  ],
+  "categories": [
+    "interstitial"
+  ]
+}

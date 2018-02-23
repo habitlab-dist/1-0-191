@@ -1,0 +1,176 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+
+<dom-module id="goal-progress-message">
+  <template>
+    <custom-style>
+      <style is="custom-style">
+        :host {
+          --paper-item: {
+            font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+            font-size: 13px;
+            overflow: hidden;
+            white-space: nowrap;
+            display: block;
+            text-overflow: ellipsis;
+          };
+          --paper-item-min-height: 36px;
+        }
+        
+  
+        #rsscontainer {
+          width: 380px;
+          height: 240px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: #e6e6ff;
+        }
+  
+        #goalprogresstitle {
+          padding-top: 15px;
+          margin-bottom: 15px;
+          font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          font-size: 16px;
+        }
+  
+        .linktext {
+          
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+  
+          width: 350px;
+          display: block;
+        }
+  
+        a {
+          overflow: hidden;
+          white-space: nowrap;
+          width: 350px;
+          text-overflow: ellipsis;
+          display: block;
+        }
+  
+        /*
+        .goalcol {
+          display: table-cell;
+          width: 100px;
+          border-spacing: 10px 10px;
+        }
+  
+        .daycol {
+          display: table-cell;
+          width: 100px;
+          border-spacing: 10px 10px;
+        }
+  
+        .trow {
+          display: table-row;
+          border-collapse: separate;
+        }
+        */
+  
+        .table-row {
+          display: flex;
+          flex-direction: row;
+          flex-grow: 0;
+          flex-wrap: wrap;
+          width: 100%;
+          padding-left: 15px;
+          padding-right: 15px;
+        }
+  
+        .goalname {
+          flex-grow: 1;
+          overflow: hidden;
+          padding-right: 20px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          width: 100px;
+        }
+  
+        .showprogress {
+          flex-grow: 1;
+          overflow: hidden;
+          padding-right: 20px;
+          padding-top: 10px;
+          padding-bottom: 10px;
+          width: 100px;
+        }
+  
+      </style>
+    </custom-style>
+    <div id="rsscontainer">
+      <div id="goalprogresstitle">Progress on your goals</div>
+
+
+      <!--
+      <div>
+        <div class="table-row">
+          <div class="goalname"></div>
+          <div class="showprogress">Today</div>
+          <div class="showprogress">Yesterday</div>
+        </div>
+
+        <div class="table-row">
+          <div class="goalname">Spend less time on Facebook</div>
+          <div class="showprogress">Achieved</div>
+          <div class="showprogress">Not achieved</div>
+        </div>
+
+        <div class="table-row">
+          <div class="goalname">Spend less time on Youtube</div>
+          <div class="showprogress">Achieved</div>
+          <div class="showprogress">Not achieved</div>
+        </div>
+      </div>
+      -->
+
+      <div>
+        <div class="table-row">
+          <div class="goalname"></div>
+          <div class="showprogress">Today</div>
+          <div class="showprogress">Yesterday</div>
+        </div>
+
+        <template is="dom-repeat" items="{{goal_info_list}}" as="goal_info">
+          <div class="table-row">
+            <div class="goalname">{{goal_info.description}}</div>
+            <template is="dom-repeat" items='[0,1]'>
+              <div class="showprogress">{{get_goal_progress_on_day(goal_info.name, item, goal_name_to_progress_this_week)}}</div>
+            </template>
+          </div>
+        </template>
+      </div>
+
+      <!--
+      <div style="display: table; border-collapse: separate; border-spacing: 10px">
+        <div class="trow">
+          <div class="goalcol"></div>
+          <div class="daycol">Today</div>
+          <div class="daycol">Yesterday</div>
+        </div>
+        <div class="trow">
+          <div class="goalcol">Spend less time on Facebook</div>
+          <div class="daycol">Achieved</div>
+          <div class="daycol">Not achieved</div>
+        </div>
+      </div>
+      -->
+
+      <!--
+      <template is="dom-repeat" items="{{goal_info_list}}" as="goal_info">
+        <div>
+          Goal: <span>{{goal_info.description}}</span>
+          Target: <span>{{get_goal_target(goal_info.name, goal_name_to_target)}}</span>
+          Today: <span>{{get_goal_progress_on_day(goal_info.name, 0, goal_name_to_progress_this_week)}}</span> <span>{{get_goal_units(goal_info.name, goal_name_to_units)}}</span>
+        </div>
+
+      </template>
+      -->
+
+    </div>
+  </template>
+  <script src="goal-progress-message.js"></script>
+</dom-module>

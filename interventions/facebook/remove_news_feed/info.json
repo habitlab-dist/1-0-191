@@ -1,0 +1,13 @@
+{
+  "description": "Removes the Facebook news feed",
+  "displayname": "Feed Eater",
+  "matches": [
+    "www.facebook.com"
+  ],
+  "content_scripts": [
+    {
+      "path": "frontend.js",
+      "run_at": "document_start"
+    }
+  ]
+}

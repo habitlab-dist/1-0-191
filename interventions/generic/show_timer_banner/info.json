@@ -1,0 +1,10 @@
+{
+  "description": "Displays time spent on the goal site constantly on the top of your screen",
+  "displayname": "The Supervisor",
+  "content_scripts": [
+    {
+      "path": "frontend.js",
+      "run_at": "document_start"
+    }
+  ]
+}

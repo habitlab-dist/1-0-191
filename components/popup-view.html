@@ -1,0 +1,251 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/polymer-themes/ice.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../bower_components/paper-toggle-button/paper-toggle-button.html">
+<link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">
+
+<dom-module id="popup-view">
+  <template>
+    <custom-style>
+      <style is="custom-style">
+        :host {
+          /*
+          width: 100%;
+          height: 100%;
+          */
+          width:600px;
+          height:580px;
+          
+          --paper-card: {
+            
+            margin-bottom: 10px;
+            display: block;
+            padding: 5px 5px 5px 5px;
+          };      
+        }
+
+        .popup_view_outer_div {
+          width:600px;
+          height:580px;
+        }
+
+        .flexcontainer {
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .box {
+          padding: 1em;
+        }
+
+        .title {
+          font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          padding-left:0.3em;
+          padding-bottom: 0.5em;
+          padding-top: 0.5em;
+        }
+
+        /* Flexbox */
+        .interventionContainer {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 0.3em;
+          padding-bottom: 0.3em;
+          padding-left: 0.3em;
+          
+          font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          margin: 0.3em;
+          margin-top: 0.5em;
+          font-size: 12px;
+        }
+
+        /* Flexbox */
+        .goalsContainer {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          padding-top: 0.3em;
+          padding-bottom: 0.3em;
+          padding-left: 0.3em;
+          
+          font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          margin: 0.3em;
+          margin-top: 0.5em;
+          font-size: 12px;
+        }
+
+        #enabledInterventions {
+          padding-top: 0.3em;
+          padding-bottom: 0.3em;
+          padding-left: 0.3em;
+          
+          font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          margin: 0.3em;
+          margin-top: 0.5em;
+          font-size: 12px;
+        }
+        
+        .interventionName {
+          margin-left: 10px;
+        }
+
+        .feedbackcontents {
+          margin: 5px;
+        }
+
+        .paperbuttons {
+          margin-right: 0px;
+          margin-left: 10px;
+          margin-bottom: 10px;
+          --paper-button: {
+            color: white;
+            background-color: white;        
+          };
+
+          --paper-button-flat-keyboard-focus: {
+            font-weight: normal;
+          };
+
+          --paper-button-raised-keyboard-focus: {
+            font-weight: normal;
+          };
+        }
+
+        #settingsPage {
+          max-width: 400px;
+          font-size: 12px;
+        }
+
+        .iview {
+          padding-top: 5px;
+        }
+
+      </style>
+    </custom-style>
+    
+    <div class="popup_view_outer_div">
+
+      <div class="box">
+        <paper-toggle-button checked="{{is_habitlab_disabled}}" style="float: left; margin-top: 5px; margin-left: 5px" on-change="disable_habitlab_changed"><span style="color: white">Turn Off HabitLab Today</span></paper-toggle-button>
+        <div class="flexcontainer">
+          <paper-button class="paperbuttons" raised id="debugButton" style="display: none" on-click="debug_button_clicked">Debug</paper-button>
+          <paper-button class="paperbuttons" raised id="feedbackButton" on-click="submit_feedback_clicked">Feedback</paper-button> 
+          <paper-button class="paperbuttons" raised on-click="results_button_clicked">Results</paper-button>
+          <paper-button class="paperbuttons" raised on-click="settings_button_clicked">Settings</paper-button>
+        </div>
+
+        <template is="dom-if" if="{{!is_habitlab_disabled}}">
+
+        <paper-card>
+          <paper-tabs selected="{{selected_tab_idx}}">
+            <paper-tab>Active Nudge</paper-tab>
+            <paper-tab>Available Goals and Nudges</paper-tab>
+          </paper-tabs>
+
+          <iron-pages selected="{{selected_tab_idx}}">
+            <iron-page id="currentInterventionPage">
+              <div class="interventioninfo">
+                <template is="dom-repeat" items="{{enabledInterventions}}" as="intervention">
+                  <div class="interventionContainer">
+                    <span class="interventionName">{{get_intervention_description(intervention, intervention_name_to_info)}}</span>
+                    <paper-button raised on-click="temp_disable_button_clicked" intervention="{{intervention}}">Turn Off Nudge</paper-button>
+                  </div>
+                </template>
+                <template is="dom-if" if="{{isEmpty(enabledInterventions)}}">
+                  <template is="dom-if" if="{{outside_work_hours()}}">
+                    <div class="interventionContainer">
+                      <h4>No nudges being shown outside work hours</h4>
+                      <paper-button class="paperbuttons" raised on-click="settings_button_clicked">Change Work Hours</paper-button>
+                    </div>
+                  </template>
+                  <template is="dom-if" if="{{!outside_work_hours()}}">
+                    <div class="interventionContainer">
+                      <h4>No nudges enabled, please enable some goals</h4>
+                    </div>
+                  </template>
+                </template>        
+              </div>
+            </iron-page>
+
+            <iron-page id="settingsPage">
+              <template is="dom-repeat" items="{{goals_and_interventions}}" as="goal_and_interventions">
+                <paper-toggle-button on-change="goal_enable_button_changed" goal="{{goal_and_interventions.goal}}" checked="{{goal_and_interventions.enabled}}">{{goal_and_interventions.goal.description}}</paper-toggle-button>
+                <br>
+                <template is="dom-if" if="{{goal_and_interventions.enabled}}">
+                  <div style="margin-left: 10px; margin-right: 10px; font-size: 14px">
+                    Each time you visit <span>{{goal_and_interventions.goal.sitename_printable}}</span>, HabitLab will deploy one of the enabled nudges:
+                    <iron-icon icon="help" style="color: #415D67; cursor: pointer; width: 20px; height: 20px" on-click="help_icon_clicked"></iron-icon>
+                  </div>
+                  <br>
+                  <template is="dom-repeat" items="{{goal_and_interventions.interventions}}" as="intervention">
+                    <intervention-view-single-compact class="iview" compact="true" goal="{{goal_and_interventions.goal}}" intervention="{{intervention}}"></intervention-view-single-compact>
+                    <br>
+                  </template>
+                </template>
+                
+              </template>
+            </iron-page>
+
+          </iron-pages>
+        </paper-card>
+        
+        <paper-card>
+          <graph-donut-top-sites style="margin-bottom: 10px"></graph-donut-top-sites>
+          <!--
+          <paper-tabs selected="{{selected_graph_tab}}">
+            <paper-tab>Usage Statistics</paper-tab>
+            <paper-tab>Select Graphs to Display</paper-tab>
+          </paper-tabs>
+
+
+          <iron-pages selected="{{selected_graph_tab}}">
+            <iron-page>
+              <div class="chartelement"> 
+                <html-echo html="{{html_for_shown_graphs}}"></html-echo>
+              </div>
+            </iron-page>
+
+            <iron-page>
+              <div class="chartelement">
+                <sortable-js id="graphlist_sortable" on-update="sortableupdated">
+                  <template is="dom-repeat" items="{{graphOptions}}" as="graph">
+                    <div>
+                      <paper-checkbox checked="{{is_not_in_blacklist(graph, blacklist, graphNamesToOptions)}}" graph="{{graph}}" on-change="checkbox_checked_handler">{{graph}}</paper-checkbox>
+                    </div>
+                  </template>         
+                </sortable-js> 
+              </div> 
+            </iron-page>
+          -->
+        </paper-card>       
+
+        
+
+        </template>
+
+        <template is="dom-if" if="{{is_habitlab_disabled}}">
+          <paper-card style="cursor: pointer" on-click="enable_habitlab_button_clicked">
+            <div style="width: 100%">
+              <div style="margin-top: 10px; font-size: 36px; text-align: center">You've disabled HabitLab today.<br>Click to re-enable</div>
+              <div style="margin: 20px; width: calc(100% - 40px); height: 300px; display: flex; justify-content: center">
+                <img style="display: inline-block; width: 100%; text-align: center" src="{{get_power_icon_src()}}"></img>
+              </div>
+            </div>
+          </paper-card>
+        </template>
+
+      </div>
+
+
+    </div>
+  </template>
+  <script src="popup-view.js"></script>
+</dom-module>

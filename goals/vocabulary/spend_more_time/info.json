@@ -1,0 +1,21 @@
+{
+  "description": "Spend more time on Vocabulary.com",
+  "goal_statement_to_fill_in": "Spend at least TARGET UNITS expanding your vocabulary each day",
+  "progress_description": "Time spent on Vocabulary.com",
+  "call_to_action": "Go learn a new word",
+  "interventions": [
+    "generic_positive/feed_injection_positive_goal_widget",
+    "generic_positive/suggest_positive_site_interstitial"
+  ],
+  "measurement": "time_spent_on_domain",
+  "domain": "www.vocabulary.com",
+  "target": {
+    "default": 2,
+    "units": "minutes"
+  },
+  "is_positive": true,
+  "disabled": true,
+  "sitename_printable": "Vocabulary.com",
+  "icon": "icon.png",
+  "color": "#7fc570"
+}

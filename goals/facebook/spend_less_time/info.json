@@ -1,0 +1,35 @@
+{
+  "description": "Spend less time on Facebook",
+  "goal_statement_to_fill_in": "Spend no more than TARGET UNITS on Facebook each day",
+  "progress_description": "Time spent on Facebook",
+  "call_to_action": "Close Facebook",
+  "interventions": [
+    "facebook/feed_injection_timer",
+    "facebook/remove_news_feed",
+    "facebook/rich_notifications",
+    "facebook/remove_comments",
+    "facebook/remove_clickbait",
+    "generic/toast_notifications",
+    "generic/show_timer_banner",
+    "generic/scroll_blocker",
+    "generic/show_user_info_interstitial",
+    "generic/make_user_wait",
+    "generic/close_tab_timer",
+    "generic/block_after_interval_per_visit"
+  ],
+  "default_interventions": [
+    "facebook/feed_injection_timer",
+    "facebook/remove_news_feed",
+    "facebook/remove_comments",
+    "generic/toast_notifications",
+    "generic/show_timer_banner"
+  ],
+  "measurement": "time_spent_on_domain",
+  "domain": "www.facebook.com",
+  "target": {
+    "default": 20,
+    "units": "minutes"
+  },
+  "icon": "icon.svg",
+  "color": "#3b5998"
+}

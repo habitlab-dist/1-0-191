@@ -1,0 +1,21 @@
+{
+  "description": "Open TED more often",
+  "goal_statement_to_fill_in": "Open TED at least TARGET UNITS each day",
+  "progress_description": "Visits to TED",
+  "call_to_action": "Watch a TED talk",
+  "interventions": [
+    "generic_positive/feed_injection_positive_goal_widget",
+    "generic_positive/suggest_positive_site_interstitial"
+  ],
+  "measurement": "visits_to_domain",
+  "domain": "www.ted.com",
+  "sitename_printable": "TED",
+  "goal_statement_units": "times",
+  "target": {
+    "default": 1,
+    "units": "visits"
+  },
+  "is_positive": true,
+  "icon": "icon.png",
+  "color": "#f18982"
+}

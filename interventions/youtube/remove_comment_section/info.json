@@ -1,0 +1,13 @@
+{
+  "description": "Removes comment section",
+  "displayname": "No Comment",
+  "matches": [
+    "www.youtube.com"
+  ],
+  "content_scripts": [
+    {
+      "path": "frontend.js",
+      "run_at": "document_start"
+    }
+  ]
+}

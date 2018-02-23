@@ -1,0 +1,10 @@
+{
+  "description": "Prompt the user before watching a video",
+  "displayname": "Think Twice",
+  "matches": [
+    "www.iqiyi.com"
+  ],
+  "content_scripts": [
+    "frontend.js"
+  ]
+}

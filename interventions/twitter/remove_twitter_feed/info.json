@@ -1,0 +1,11 @@
+{
+  "description": "Removes the Twitter news feed",
+  "displayname": "Feed Eater",
+  "matches": [
+    "twitter.com"
+  ],
+  "content_scripts": [
+    "frontend.js"
+  ],
+  "preview": "https://www.twitter.com"
+}

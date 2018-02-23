@@ -1,0 +1,18 @@
+{
+  "description": "Notifies you of time spent in the corner of your desktop",
+  "displayname": "TimeKeeper",
+  "matches": [
+    "www.facebook.com"
+  ],
+  "content_scripts": [
+    "frontend.js"
+  ],
+  "parameters": [
+    {
+      "name": "minutes",
+      "description": "The amount of minutes between notifications",
+      "default": 1,
+      "type": "int"
+    }
+  ]
+}

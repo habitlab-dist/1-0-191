@@ -1,0 +1,48 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-range-slider/paper-range-slider.html">
+<link rel="import" href="../bower_components/paper-radio-group/paper-radio-group.html">
+<link rel="import" href="../bower_components/paper-radio-button/paper-radio-button.html">
+
+<dom-module id="multi-armed-bandit-debug">
+  <template>
+    <style>
+       :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+
+    <label id="algorithm_selector_label">Algorithm:</label>
+    <paper-radio-group on-change="algorithm_changed" selected="{{algorithm}}" aria-labelledby="algorithm_selector_label">
+      <paper-radio-button name="thompson">Thompson Sampling</paper-radio-button>
+      <paper-radio-button name="egreedy">Epsilon-Greedy</paper-radio-button>
+      <paper-radio-button name="softmax">Softmax (Boltzmann Exploration)</paper-radio-button>
+    </paper-radio-group>
+
+    <template is="dom-repeat" items="{{rewards_info}}" as="reward_info">
+      <div>
+        <h3 id="{{to_id(reward_info.intervention)}}" class="intervention_name">{{reward_info.intervention}}</h3>
+        <paper-range-slider always-show-pin class="intervention_score_range" intervention="{{reward_info.intervention}}" on-change="slider_changed"
+          min='0' max='1' step='0.01' value-min='0.45' value-max='0.55'></paper-range-slider>
+        <paper-button intervention="{{reward_info.intervention}}" on-click="disable_intervention_in_simulation">Disable this intervention in simulation</paper-button>
+        <div>time range: <span>{{get_lower_range_time(reward_info.intervention, intervention_score_ranges)}}</span> to <span>{{get_upper_range_time(reward_info.intervention, intervention_score_ranges)}}</span></div>
+        <div>average score: <span>{{reward_info.average_score}}</span></div>
+        <div>number of trials: </span>{{reward_info.num_trials}}</span>
+        </div>
+      </div>
+    </template>
+
+    <br><br>
+    <paper-button on-click="choose_intervention">Simulate choosing a new intervention</paper-button>
+    <div>Chosen intervention: <span>{{chosen_intervention}}</span></div>
+    <div>Reward for chosen intervention this round: <span>{{chosen_intervention_reward_value}}</span></div>
+    <div>Regret this round: <span>{{regret_this_round}}</span></div>
+    <div>Total accumulated regret: <span>{{total_regret}}<span></div>
+    <div>Total number of rounds played: <span>{{total_rounds_played}}</span></div>
+    <div>Average regret per round: <span>{{average_regret}}<span></div>
+
+  </template>
+  <script src="multi-armed-bandit-debug.js"></script>
+</dom-module>

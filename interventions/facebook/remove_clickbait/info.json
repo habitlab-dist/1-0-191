@@ -1,0 +1,13 @@
+{
+  "description": "Removes clickbait",
+  "displayname": "Clickbait Mosaic",
+  "matches": [
+    "www.facebook.com"
+  ],
+  "content_scripts": [
+    {
+      "path": "frontend.js",
+      "run_at": "document_start"
+    }
+  ]
+}

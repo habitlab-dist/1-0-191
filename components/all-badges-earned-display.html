@@ -1,0 +1,37 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="badge-display-mini.html">
+
+<dom-module id="all-badges-earned-display">
+  <template>
+    <style>
+       :host {
+        width: 100%;
+        text-align: center;
+        /*
+            opacity: 1;
+            width: 100vw;
+            background-color: white;
+            color: black;
+            z-index: 9007199254740991;
+            */
+      }
+
+      h5 {
+        font-size: 15px;
+      }
+    </style>
+    <div style="font-size: 25px; color:#5a5a5a; margin-bottom:5px;">Time Badges</div>
+    <div style="font-size: 18px; color:#5a5a5a; margin-bottom:10px;">Here's what you can do with the time you've saved using HabitLab</div>
+    <br>
+    <div style="display: block">
+      <template is="dom-repeat" items="{{badges}}" as="badge">
+        <badge-display-mini minutes_saved="{{badge.minutes_saved}}" style="display: inline-block; padding: 5px"></badge-display-mini>
+      </template>
+      <template is="dom-if" if="{{no_badges_yet(badges)}}">
+        <h5>No badges earned yet — come back soon!</h5>
+      </template>
+    </div>
+  </template>
+  <script src="all-badges-earned-display.js"></script>
+</dom-module>

@@ -1,0 +1,28 @@
+{
+  "description": "Spend less time on YouTube",
+  "goal_statement_to_fill_in": "Spend no more than TARGET UNITS on YouTube each day",
+  "progress_description": "Time spent on YouTube",
+  "call_to_action": "Close Youtube",
+  "interventions": [
+    "generic/toast_notifications",
+    "generic/show_timer_banner",
+    "youtube/remove_sidebar_links",
+    "youtube/prompt_before_watch",
+    "youtube/remove_comment_section",
+    "generic/block_after_interval_per_visit"
+  ],
+  "default_interventions": [
+    "youtube/remove_sidebar_links",
+    "youtube/prompt_before_watch",
+    "youtube/remove_comment_section"
+  ],
+  "measurement": "time_spent_on_domain",
+  "domain": "www.youtube.com",
+  "preview": "https://www.youtube.com/watch?v=7maJOI3QMu0",
+  "target": {
+    "default": 20,
+    "units": "minutes"
+  },
+  "icon": "icon.svg",
+  "color": "#e44441"
+}

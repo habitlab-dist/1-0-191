@@ -1,0 +1,28 @@
+{
+  "description": "Spend less time on Gmail",
+  "goal_statement_to_fill_in": "Spend no more than TARGET UNITS on Gmail each day",
+  "progress_description": "Time spent on Gmail",
+  "call_to_action": "Close Gmail",
+  "interventions": [
+    "generic/toast_notifications",
+    "generic/show_timer_banner",
+    "generic/scroll_blocker",
+    "generic/show_user_info_interstitial",
+    "generic/make_user_wait",
+    "generic/close_tab_timer",
+    "generic/block_after_interval_per_visit"
+  ],
+  "default_interventions": [
+    "generic/toast_notifications",
+    "generic/show_timer_banner"
+  ],
+  "measurement": "time_spent_on_domain",
+  "domain": "mail.google.com",
+  "target": {
+    "default": 20,
+    "units": "minutes"
+  },
+  "icon": "icon.svg",
+  "preview": "https://mail.google.com",
+  "color": "#d44639"
+}

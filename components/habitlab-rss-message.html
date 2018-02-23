@@ -1,0 +1,75 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+
+<dom-module id="habitlab-rss-message">
+  <template>
+    <custom-style>
+      <style is="custom-style">
+        :host {
+          --paper-item: {
+            font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+            font-size: 20px;
+            font-color: #526FAB;
+            overflow: hidden;
+            white-space: nowrap;
+            display: block;
+            text-overflow: ellipsis;
+          };
+          --paper-item-min-height: 36px;
+        }
+        
+
+        #rsscontainer {
+          width: 519px;
+          height: 280px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: #95CBEE;
+        }
+
+        #rsstitle {
+          padding-top: 15px;
+          margin-bottom: 15px;
+          font-family: Verdana, Geneva, Tahoma, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+          font-size: 20px;
+          color: #415D67;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+
+        .linktext {
+          
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
+          width: 350px;
+          display: block;
+        }
+
+        a {
+          overflow: hidden;
+          white-space: nowrap;
+          width: 350px;
+          text-overflow: ellipsis;
+          display: block;
+        }
+
+
+      </style>
+    </custom-style>
+    <div id="rsscontainer">
+      <div id="rsstitle">Why not read the New York Times instead?</div>
+
+      <template is="dom-repeat" items="{{articles}}">
+        <div class="linktext">
+          <a href="{{item.url}}"  on-click="link_clicked">
+            <paper-item>{{item.title}}</paper-item>
+          </a>
+        </div>
+      </template>
+    </div>
+  </template>
+  <script src="habitlab-rss-message.js"></script>
+</dom-module>

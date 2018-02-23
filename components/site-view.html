@@ -1,0 +1,148 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/chart-elements/chart-doughnut.html">
+<link rel="import" href="../bower_components/chart-elements/chart-bar.html">
+<link rel="import" href="../bower_components/chart-elements/chart-horizontal-bar.html">
+<link rel="import" href="../bower_components/chart-elements/chart-line.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="site-goal-view-v2.html">
+<link rel="import" href="intervention-view-single-v2.html">
+<link rel="import" href="graph-time-saved-daily.html">
+<link rel="import" href="graph-num-times-interventions-deployed.html">
+<link rel="import" href="graph-donut-top-sites.html">
+<link rel="import" href="all-badges-earned-display.html">
+<link rel="import" href="graph-intervention-effectiveness-comparison.html">
+<link rel="import" href="create-intervention-dialog.html">
+<link rel="import" href="goal-target-input.html">
+<!--
+<link rel="import" href="intervention-carousel.html">
+-->
+
+<dom-module id="site-view">
+  <template>
+    <style>
+       :host {
+        display: block;
+        width: 100%;
+        height: 100%;
+        --paper-card: {
+          width: 90%;
+          padding: 10px 20px;
+          margin-top: 10px;
+        }
+        ;
+      }
+
+      .title-text {
+        font-size: 22px;
+        color: #2b2b2b;
+        margin-top: 10px;
+      }
+
+      .container {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .title {
+        font-size: 38px;
+        margin-top: 0.3em;
+        margin-bottom: 20px;
+        /*font-weight: 200;*/
+      }
+
+      .description {
+        font-size: 2.2em;
+        margin-top: 0.8em;
+      }
+
+      .button {
+        color: white;
+        background-color: #415D67;
+        padding: 5px;
+        font-size: 16px;
+        text-transform: none;
+        -webkit-font-smoothing: subpixel-antialiased;
+      }
+
+      hr {
+        margin-top: 2em;
+      }
+
+      .paper-card {
+        width: 100%;
+        margin-top: 0px;
+      }
+
+      .card-content {
+        font-size: 16px;
+        margin-top: 0px;
+      }
+    </style>
+    <div class="container">
+      <!-- <div id="encouragement" class="title">Good job so far!</div>
+      <div class="title">HabitLab Analytics</div> -->
+      <div style=" width:100%; background-color:{{goal_info.color}};">
+        <div class="title" style="color: white">　{{goal_info.sitename_printable}}　</div>
+        <!-- <div class="card-content" style="color: white; margin-bottom: 10px">Goal: {{goal_info.description}}</div>          -->
+      </div>
+
+      <paper-card class="paper-card" style="font-size: 22px; color:#5a5a5a;">
+        <div class="title-text">Goal</div>
+        <div class="card-content">
+          <goal-target-input goal="{{goal_info}}"></goal-target-input>
+        </div>
+      </paper-card>
+
+      <paper-card class="paper-card">
+
+        <paper-button class="button" on-click="vote_for_nudge_clicked">Vote for new nudges</paper-button>
+        <br> <br>
+        <paper-button class="button" on-click="code_custom_nudge_clicked">Code your own nudge</paper-button>
+        <br> <br> <br>
+
+        <div class="title-text"> Nudges </div>
+
+        <!-- <paper-card heading="{{goal_info.sitename_printable}} Nudges" class="paper-card"> -->
+        <div class="card-content">Nudges turned on will only be shown some of the time
+          <iron-icon icon="help" on-click="help_icon_clicked" style="width: 25px; height: 25px; color: #415D67; cursor: pointer; margin-bottom: 5px"></iron-icon>
+        </div>
+
+        <template is="dom-repeat" items="{{goal_info.interventions}}" as="intervention_name">
+          <intervention-view-single-v2 goal="{{goal_info}}" intervention="{{intervention_name_to_info(intervention_name, intervention_name_to_info_map)}}"></intervention-view-single-v2>
+          <br> <br>
+        </template>
+      </paper-card>
+
+      <!--
+      <intervention-carousel style="width: 100%; height: 400px"></intervention-carousel>
+      -->
+
+
+      <paper-card class="paper-card" style="font-size: 22px; color:#5a5a5a;">
+        <div class="title-text"> Progress </div>
+        <!-- <paper-card heading="{{goal_info.sitename_printable}} Progress" class="paper-card"> -->
+        <div class="card-content">
+          <site-goal-view-v2 site="{{goal_info.sitename}}"></site-goal-view-v2>
+        </div>
+      </paper-card>
+      <template is="dom-if" if="{{!goal_info.is_positive}}">
+        <paper-card class="paper-card" style="font-size: 22px; color:#5a5a5a;">
+          <div class="title-text"> Nudge Effectiveness </div>
+          <!-- <paper-card heading="{{goal_info.sitename_printable}} Nudge Effectiveness" class="paper-card"> -->
+          <div class="card-content">
+            <graph-intervention-effectiveness-comparison goal_info="{{goal_info}}"></graph-intervention-effectiveness-comparison>
+          </div>
+        </paper-card>
+      </template>
+
+      <!-- <div style="margin-bottom: 20px"></div> -->
+    </div>
+  </template>
+  <script src="site-view.js"></script>
+</dom-module>

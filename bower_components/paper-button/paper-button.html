@@ -1,0 +1,490 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+--><html><head><link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../paper-behaviors/paper-button-behavior.html">
+<link rel="import" href="../paper-material/paper-material.html">
+
+<!--
+Material design: [Buttons](https://www.google.com/design/spec/components/buttons.html)
+
+`paper-button` is a button. When the user touches the button, a ripple effect emanates
+from the point of contact. It may be flat or raised. A raised button is styled with a
+shadow.
+
+Example:
+
+    <paper-button>Flat button</paper-button>
+    <paper-button raised>Raised button</paper-button>
+    <paper-button noink>No ripple effect</paper-button>
+    <paper-button toggles>Toggle-able button</paper-button>
+
+A button that has `toggles` true will remain `active` after being clicked (and
+will have an `active` attribute set). For more information, see the `Polymer.IronButtonState`
+behavior.
+
+You may use custom DOM in the button body to create a variety of buttons. For example, to
+create a button with an icon and some text:
+
+    <paper-button>
+      <iron-icon icon="favorite"></iron-icon>
+      custom button content
+    </paper-button>
+
+To use `paper-button` as a link, wrap it in an anchor tag. Since `paper-button` will already
+receive focus, you may want to prevent the anchor tag from receiving focus as well by setting
+its tabindex to -1.
+
+    <a href="https://www.polymer-project.org/" tabindex="-1">
+      <paper-button raised>Polymer Project</paper-button>
+    </a>
+
+### Styling
+
+Style the button with CSS as you would a normal DOM element.
+
+    paper-button.fancy {
+      background: green;
+      color: yellow;
+    }
+
+    paper-button.fancy:hover {
+      background: lime;
+    }
+
+    paper-button[disabled],
+    paper-button[toggles][active] {
+      background: red;
+    }
+
+By default, the ripple is the same color as the foreground at 25% opacity. You may
+customize the color using the `--paper-button-ink-color` custom property.
+
+The following custom properties and mixins are also available for styling:
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--paper-button-ink-color` | Background color of the ripple | `Based on the button's color`
+`--paper-button` | Mixin applied to the button | `{}`
+`--paper-button-disabled` | Mixin applied to the disabled button. Note that you can also use the `paper-button[disabled]` selector | `{}`
+`--paper-button-flat-keyboard-focus` | Mixin applied to a flat button after it's been focused using the keyboard | `{}`
+`--paper-button-raised-keyboard-focus` | Mixin applied to a raised button after it's been focused using the keyboard | `{}`
+
+@demo demo/index.html
+-->
+
+</head><body><dom-module id="paper-button">
+  <template strip-whitespace="">
+
+<!--
+  <style is="custom-style">
+    :root {
+
+      --layout: {
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+      };
+
+      --layout-inline: {
+        display: -ms-inline-flexbox;
+        display: -webkit-inline-flex;
+        display: inline-flex;
+      };
+
+      --layout-horizontal: {
+        @apply(--layout);
+
+        -ms-flex-direction: row;
+        -webkit-flex-direction: row;
+        flex-direction: row;
+      };
+
+      --layout-horizontal-reverse: {
+        @apply(--layout);
+
+        -ms-flex-direction: row-reverse;
+        -webkit-flex-direction: row-reverse;
+        flex-direction: row-reverse;
+      };
+
+      --layout-vertical: {
+        @apply(--layout);
+
+        -ms-flex-direction: column;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+      };
+
+      --layout-vertical-reverse: {
+        @apply(--layout);
+
+        -ms-flex-direction: column-reverse;
+        -webkit-flex-direction: column-reverse;
+        flex-direction: column-reverse;
+      };
+
+      --layout-wrap: {
+        -ms-flex-wrap: wrap;
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+      };
+
+      --layout-wrap-reverse: {
+        -ms-flex-wrap: wrap-reverse;
+        -webkit-flex-wrap: wrap-reverse;
+        flex-wrap: wrap-reverse;
+      };
+
+      --layout-flex-auto: {
+        -ms-flex: 1 1 auto;
+        -webkit-flex: 1 1 auto;
+        flex: 1 1 auto;
+      };
+
+      --layout-flex-none: {
+        -ms-flex: none;
+        -webkit-flex: none;
+        flex: none;
+      };
+
+      --layout-flex: {
+        -ms-flex: 1 1 0.000000001px;
+        -webkit-flex: 1;
+        flex: 1;
+        -webkit-flex-basis: 0.000000001px;
+        flex-basis: 0.000000001px;
+      };
+
+      --layout-flex-2: {
+        -ms-flex: 2;
+        -webkit-flex: 2;
+        flex: 2;
+      };
+
+      --layout-flex-3: {
+        -ms-flex: 3;
+        -webkit-flex: 3;
+        flex: 3;
+      };
+
+      --layout-flex-4: {
+        -ms-flex: 4;
+        -webkit-flex: 4;
+        flex: 4;
+      };
+
+      --layout-flex-5: {
+        -ms-flex: 5;
+        -webkit-flex: 5;
+        flex: 5;
+      };
+
+      --layout-flex-6: {
+        -ms-flex: 6;
+        -webkit-flex: 6;
+        flex: 6;
+      };
+
+      --layout-flex-7: {
+        -ms-flex: 7;
+        -webkit-flex: 7;
+        flex: 7;
+      };
+
+      --layout-flex-8: {
+        -ms-flex: 8;
+        -webkit-flex: 8;
+        flex: 8;
+      };
+
+      --layout-flex-9: {
+        -ms-flex: 9;
+        -webkit-flex: 9;
+        flex: 9;
+      };
+
+      --layout-flex-10: {
+        -ms-flex: 10;
+        -webkit-flex: 10;
+        flex: 10;
+      };
+
+      --layout-flex-11: {
+        -ms-flex: 11;
+        -webkit-flex: 11;
+        flex: 11;
+      };
+
+      --layout-flex-12: {
+        -ms-flex: 12;
+        -webkit-flex: 12;
+        flex: 12;
+      };
+
+      /* alignment in cross axis */
+
+      --layout-start: {
+        -ms-flex-align: start;
+        -webkit-align-items: flex-start;
+        align-items: flex-start;
+      };
+
+      --layout-center: {
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+      };
+
+      --layout-end: {
+        -ms-flex-align: end;
+        -webkit-align-items: flex-end;
+        align-items: flex-end;
+      };
+
+      --layout-baseline: {
+        -ms-flex-align: baseline;
+        -webkit-align-items: baseline;
+        align-items: baseline;
+      };
+
+      /* alignment in main axis */
+
+      --layout-start-justified: {
+        -ms-flex-pack: start;
+        -webkit-justify-content: flex-start;
+        justify-content: flex-start;
+      };
+
+      --layout-center-justified: {
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+      };
+
+      --layout-end-justified: {
+        -ms-flex-pack: end;
+        -webkit-justify-content: flex-end;
+        justify-content: flex-end;
+      };
+
+      --layout-around-justified: {
+        -ms-flex-pack: distribute;
+        -webkit-justify-content: space-around;
+        justify-content: space-around;
+      };
+
+      --layout-justified: {
+        -ms-flex-pack: justify;
+        -webkit-justify-content: space-between;
+        justify-content: space-between;
+      };
+
+      --layout-center-center: {
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
+      };
+
+      /* self alignment */
+
+      --layout-self-start: {
+        -ms-align-self: flex-start;
+        -webkit-align-self: flex-start;
+        align-self: flex-start;
+      };
+
+      --layout-self-center: {
+        -ms-align-self: center;
+        -webkit-align-self: center;
+        align-self: center;
+      };
+
+      --layout-self-end: {
+        -ms-align-self: flex-end;
+        -webkit-align-self: flex-end;
+        align-self: flex-end;
+      };
+
+      --layout-self-stretch: {
+        -ms-align-self: stretch;
+        -webkit-align-self: stretch;
+        align-self: stretch;
+      };
+
+      --layout-self-baseline: {
+        -ms-align-self: baseline;
+        -webkit-align-self: baseline;
+        align-self: baseline;
+      };
+
+      /* multi-line alignment in main axis */
+
+      --layout-start-aligned: {
+        -ms-flex-line-pack: start;  /* IE10 */
+        -ms-align-content: flex-start;
+        -webkit-align-content: flex-start;
+        align-content: flex-start;
+      };
+
+      --layout-end-aligned: {
+        -ms-flex-line-pack: end;  /* IE10 */
+        -ms-align-content: flex-end;
+        -webkit-align-content: flex-end;
+        align-content: flex-end;
+      };
+
+      --layout-center-aligned: {
+        -ms-flex-line-pack: center;  /* IE10 */
+        -ms-align-content: center;
+        -webkit-align-content: center;
+        align-content: center;
+      };
+
+      --layout-between-aligned: {
+        -ms-flex-line-pack: justify;  /* IE10 */
+        -ms-align-content: space-between;
+        -webkit-align-content: space-between;
+        align-content: space-between;
+      };
+
+      --layout-around-aligned: {
+        -ms-flex-line-pack: distribute;  /* IE10 */
+        -ms-align-content: space-around;
+        -webkit-align-content: space-around;
+        align-content: space-around;
+      };
+
+      /*******************************
+                Other Layout
+      *******************************/
+
+      --layout-block: {
+        display: block;
+      };
+
+      --layout-invisible: {
+        visibility: hidden !important;
+      };
+
+      --layout-relative: {
+        position: relative;
+      };
+
+      --layout-fit: {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      };
+
+      --layout-scroll: {
+        -webkit-overflow-scrolling: touch;
+        overflow: auto;
+      };
+
+      --layout-fullbleed: {
+        margin: 0;
+        height: 100vh;
+      };
+
+      /* fixed position */
+
+      --layout-fixed-top: {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+      };
+
+      --layout-fixed-right: {
+        position: fixed;
+        top: 0;
+        right: 0;
+        bottom: 0;
+      };
+
+      --layout-fixed-bottom: {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      };
+
+      --layout-fixed-left: {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+      };
+
+    }
+
+  </style>
+-->
+
+    <style include="paper-material">
+      :host {
+        @apply(--layout-inline);
+        @apply(--layout-center-center);
+        position: relative;
+        box-sizing: border-box;
+        min-width: 5.14em;
+        margin: 0 0.29em;
+        background: transparent;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: transparent;
+        font-size: 1em;
+        font-family: Verdana, Geneva, "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: normal;
+        text-transform: uppercase;
+        outline-width: 0;
+        border-radius: 3px;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
+        cursor: pointer;
+        z-index: 0;
+        padding: 0.7em 0.57em;
+
+        @apply(--paper-font-common-base);
+        @apply(--paper-button);
+      }
+
+      :host([raised].keyboard-focus) {
+        font-weight: bold;
+        @apply(--paper-button-raised-keyboard-focus);
+      }
+
+      :host(:not([raised]).keyboard-focus) {
+        font-weight: bold;
+        @apply(--paper-button-flat-keyboard-focus);
+      }
+
+      :host([disabled]) {
+        background: #eaeaea;
+        color: #a8a8a8;
+        cursor: auto;
+        pointer-events: none;
+
+        @apply(--paper-button-disabled);
+      }
+
+      paper-ripple {
+        color: var(--paper-button-ink-color);
+      }
+    </style>
+
+    <content></content>
+  </template>
+
+  <script src="paper-button-0.js"></script>
+</dom-module>
+</body></html>
